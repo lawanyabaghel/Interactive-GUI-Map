@@ -1,6 +1,6 @@
 # Interactive-GUI-Map
 
-The project consists of a map application which reads earthquake data from a live feed in realtime and displays it on the GUI, with the markers organized on the basis of magnitude and depth.The map also showcases the cities in the world map using City Markers. 
+The project consists of a map application that reads earthquake data from a live feed in realtime and displays it on the GUI, with the markers organized on the basis of magnitude and depth.The map also showcases the cities in the world map using City Markers. 
 
 CUSTOM MARKERS
 ----------
