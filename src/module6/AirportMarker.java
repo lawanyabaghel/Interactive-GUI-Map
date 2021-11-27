@@ -7,13 +7,6 @@ import de.fhpotsdam.unfolding.data.PointFeature;
 import de.fhpotsdam.unfolding.marker.SimpleLinesMarker;
 import processing.core.PGraphics;
 
-/** 
- * A class to represent AirportMarkers on a world map.
- *   
- * @author Adam Setters and the UC San Diego Intermediate Software Development
- * MOOC team
- *
- */
 public class AirportMarker extends CommonMarker {
 	public static List<SimpleLinesMarker> routes;
 	
@@ -35,8 +28,6 @@ public class AirportMarker extends CommonMarker {
 		 // show rectangle with title
 		
 		// show routes
-		
-		
 	}
 	
 }
