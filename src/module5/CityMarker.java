@@ -20,6 +20,7 @@ public class CityMarker extends CommonMarker {
 	}
 
 	public void drawMarker(PGraphics pg, float x, float y) {
+		// drawing triangle for each city
 		pg.pushStyle();
 		pg.fill(0,255,255);
 		pg.triangle(x, y-TRI_SIZE, x-TRI_SIZE, y+TRI_SIZE, x+TRI_SIZE, y+TRI_SIZE);
@@ -42,7 +43,7 @@ public class CityMarker extends CommonMarker {
 		pg.text(pop, x+3, y - TRI_SIZE -18);
 		pg.popStyle();
 	}
-	
+	// Local getters for some city properties. 
 	public String getCity()
 	{
 		return getStringProperty("name");
