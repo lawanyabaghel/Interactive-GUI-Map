@@ -34,14 +34,18 @@ public class EarthquakeCityMap extends PApplet {
 	private String countryFile = "countries.geo.json";
 	
 	private UnfoldingMap map;
+	// Markers for each city
 	private List<Marker> cityMarkers;
+	// Markers for each earthquake
 	private List<Marker> quakeMarkers;
+	// A List of country markers
 	private List<Marker> countryMarkers;
 	
 	private CommonMarker lastSelected;
 	private CommonMarker lastClicked;
 	
-	public void setup() {		
+	public void setup() {	
+		// Initializing canvas and map tiles
 		size(900, 700, OPENGL);
 		if (offline) {
 		    map = new UnfoldingMap(this, 200, 50, 650, 600, new MBTilesMapProvider(mbTilesString));
@@ -52,16 +56,16 @@ public class EarthquakeCityMap extends PApplet {
 		}
 		MapUtils.createDefaultEventDispatcher(this, map);
 		
-		
+		// Reading in earthquake data and geometric properties
 		List<Feature> countries = GeoJSONReader.loadData(this, countryFile);
 		countryMarkers = MapUtils.createSimpleMarkers(countries);
-		
+		// read in city data
 		List<Feature> cities = GeoJSONReader.loadData(this, cityFile);
 		cityMarkers = new ArrayList<Marker>();
 		for(Feature city : cities) {
 		  cityMarkers.add(new CityMarker(city));
 		}
-	    
+	    //read in earthquake RSS feed
 	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
 	    quakeMarkers = new ArrayList<Marker>();
 	    
@@ -76,7 +80,7 @@ public class EarthquakeCityMap extends PApplet {
 		  }
 	    }
 	    printQuakes();
-	 	
+	    // Add markers to map(Country markers are not added to the map. They are only used for their geometric properties)	
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
 	    
@@ -121,7 +125,11 @@ public class EarthquakeCityMap extends PApplet {
 		}
 	}
 	
-	// The event handler for mouse clicks
+	/** The event handler for mouse clicks
+	 * It will display an earthquake and its threat circle of cities
+	 * Or if a city is clicked, it will display all the earthquakes 
+	 * where the city is in the threat circle
+	 */
 	@Override
 	public void mouseClicked(){
 		if (lastClicked != null) {
@@ -136,7 +144,7 @@ public class EarthquakeCityMap extends PApplet {
 			}
 		}
 	}
-	
+	// Helper method that will check if a city marker was clicked on
 	private void checkCitiesForClick()
 	{
 		if (lastClicked != null) return;
@@ -182,7 +190,7 @@ public class EarthquakeCityMap extends PApplet {
 			}
 		}
 	}
-
+        // loop over and unhide all markers
 	private void unhideMarkers() {
 		for(Marker marker : quakeMarkers) {
 			marker.setHidden(false);
@@ -192,7 +200,7 @@ public class EarthquakeCityMap extends PApplet {
 			marker.setHidden(false);
 		}
 	}
-	
+	//method to draw key in GUI
 	private void addKey() {	
 		fill(255, 250, 240);
 		
@@ -254,7 +262,9 @@ public class EarthquakeCityMap extends PApplet {
 			
 	}
 
-	
+	// Checks whether this quake occurred on land.  If it did, it sets the 
+	// "country" property of its PointFeature to the country where it occurred
+	// and returns true. 
 	private boolean isLand(PointFeature earthquake) {
 		for (Marker country : countryMarkers) {
 			if (isInCountry(earthquake, country)) {
@@ -288,7 +298,7 @@ public class EarthquakeCityMap extends PApplet {
 		}
 		System.out.println("OCEAN QUAKES: " + totalWaterQuakes);
 	}
-	
+	//method to test whether a given earthquake is in a given country
 	private boolean isInCountry(PointFeature earthquake, Marker country) {
 		Location checkLoc = earthquake.getLocation();
 		if(country.getClass() == MultiMarker.class) {
