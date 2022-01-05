@@ -5,10 +5,14 @@ import processing.core.PGraphics;
 
 public abstract class EarthquakeMarker extends CommonMarker{
 	protected boolean isOnLand;
+	// The radius of the Earthquake marker
 	protected float radius;
 	
+	// constants for distance
 	protected static final float kmPerMile = 1.6f;
+	//Greater than or equal to this threshold is a moderate earthquake 
 	public static final float THRESHOLD_MODERATE = 5;
+	// Greater than or equal to this threshold is a light earthquake 
 	public static final float THRESHOLD_LIGHT = 4;
 
 	/** Greater than or equal to this threshold is an intermediate depth */
@@ -17,10 +21,12 @@ public abstract class EarthquakeMarker extends CommonMarker{
 	public static final float THRESHOLD_DEEP = 300;
 
 	public abstract void drawEarthquake(PGraphics pg, float x, float y);
-		
+	
+	// constructor
 	public EarthquakeMarker (PointFeature feature) 
 	{
 		super(feature.getLocation());
+		// Add a radius property and then set the properties
 		java.util.HashMap<String, Object> properties = feature.getProperties();
 		float magnitude = Float.parseFloat(properties.get("magnitude").toString());
 		properties.put("radius", 2*magnitude );
@@ -30,8 +36,11 @@ public abstract class EarthquakeMarker extends CommonMarker{
 	
 	@Override
 	public void drawMarker(PGraphics pg, float x, float y) {
+		// save previous styling
 		pg.pushStyle();
+		// determine color of marker from depth
 		colorDetermine(pg);
+		// call abstract method implemented in child class to draw marker shape
 		drawEarthquake(pg, x, y);	
 		String age = getStringProperty("age");
 		if ("Past Hour".equals(age) || "Past Day".equals(age)) {
@@ -48,6 +57,7 @@ public abstract class EarthquakeMarker extends CommonMarker{
 					y-(radius+buffer));
 			
 		}
+		// reset to previous styling
 		pg.popStyle();
 		
 	}
@@ -85,9 +95,7 @@ public abstract class EarthquakeMarker extends CommonMarker{
 	}
 	
 	
-	/*
-	 * getters for earthquake properties
-	 */
+	 //getters for earthquake properties
 	
 	public float getMagnitude() {
 		return Float.parseFloat(getProperty("magnitude").toString());
