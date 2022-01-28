@@ -79,7 +79,10 @@ public class EarthquakeCityMap extends PApplet {
 		    quakeMarkers.add(new OceanQuakeMarker(feature));
 		  }
 	    }
+		//Sort the earthquake in increasing order of magnitde and print
+	    sortAndPrint(4000);
 	    printQuakes();
+		
 	    // Add markers to map(Country markers are not added to the map. They are only used for their geometric properties)	
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
@@ -93,6 +96,14 @@ public class EarthquakeCityMap extends PApplet {
 		addKey();
 		
 	}
+	private void sortAndPrint(int numToPrint) {
+		 EarthquakeMarker[] markersArray = quakeMarkers.toArray(new EarthquakeMarker[quakeMarkers.size()]);
+			Arrays.sort(markersArray);
+			int NumToPrint = numToPrint >= markersArray.length ? markersArray.length : numToPrint;
+			for (int i = 0; i < numToPrint; i++) {
+				System.out.println((i + 1) + " ) " + markersArray[i]);
+			}
+        }
 	
 	// Event handler that gets called automatically when the  mouse moves.
 	@Override
