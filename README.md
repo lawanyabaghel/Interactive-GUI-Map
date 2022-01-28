@@ -9,6 +9,6 @@ The geo-positioned markers are customised with different shapes and colors using
 EVENT HANDLERS
 ----------
 The application is made interactive by the addition of event handlers for mouse clicks and hovers. For example:
-1. When an earthquake marker is clicked, all the markers disappear except the city markers that lie in the threat circle(cities that might be affected by the earthquake) of the earthquake or if a city is clicked, it will display all the earthquakes where the city is in the threat circle whereas clicking it again unhides all the markers. 
+1. When an earthquake marker is clicked, all the markers disappear except the city markers that lie in the threat circle(cities that might be affected by the earthquake) of the earthquake and if a city is clicked, all the earthquakes disappear except those that might affect the city i.e city lies in the threat circle of that particular earthquake whereas clicking it again unhides all the markers. 
 2. Interactions like zoom and pan are included.
 3. Hovering over an earthquake displays information about the earthquake like the magnitude and the location.
